@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        input {
+            display: block;
+            margin: 0.5rem 0;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <form action="" id="userRegistration">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name">
+        
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" placeholder="Enter your email">
+       
+        <button id="sendRegistration" type="submit">Register</button>
+    </form>
+
+    <script>
+
+         const email = document.getElementById('email'); // Get the email inputs value
+
+         const submitButton = document.getElementById('sendRegistration'); // Get the submit button element
+
+         submitButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            const emailValue = email.value; // Get the current value of the email input
+
+            if (emailValue.includes('@') && emailValue.includes('.')) {
+                //submit form here
+                document.getElementById('userRegistration').submit(); // Submit the form if the email 
+              alert('Success');
+            } else {
+                alert('Email is invalid. Please enter a valid email address.');
+            }
+
+         })
+            
+         
+
+    </script>
+
+</body>
+
+</html>

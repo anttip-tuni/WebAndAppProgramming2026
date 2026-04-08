@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+
+    <script>
+
+        //String basics 
+
+       let myString = "Hello, World!"; //this is a string because of the quotation marks
+
+       let myString2 = 'Hello, World!'; //single quotes also work for strings
+
+       let myString3 = `Hello, world!`; //backticks also work for strings, and allow for string interpolation
+
+       let name = "Antti";
+
+       console.log(`Hello, ${name}!`); //string interpolation allows us to insert variables into strings
+
+       console.log('Hello, ' + name + '!'); //traditional way of concatenating strings and variables
+
+
+       //String methods
+
+       //.length
+
+        console.log(name.length); //returns the length of the string
+
+        //try independently: make the console log more informative by adding some text to it. Make it says something like:
+        //The length of the name Antti is: 5
+        //Don't hardcode "Antti" but get it from the name variable 
+        
+        console.log(`The length of the name ${name} is: ${name.length}`); //template literals allow us to easily include variables and expressions in strings
+
+        console.log("The length of the name " + name + " is: " + name.length); //traditional way of concatenating strings and variables
+
+        //check out the 02 character counter.html file foran example of using .length in a real application
+
+        //.includes
+
+        console.log(name.includes("tt")); //returns true if the string includes the specified substring, false otherwise
+
+        //check out the 03 email validation.html file for an example of using .includes in a real application
+
+        
+        //.split
+
+        const myUrl = "https://www.tuni.fi";
+
+        let urlParts = myUrl.split('.'); //splits the string into an array
+
+        console.log('Your domain was: ' + urlParts[1]); //returns an array of the parts of the string that were separated by the specified separator
+
+        //.join
+
+        urlParts[1] = 'tamk';
+
+        let newUrl = urlParts.join('.'); //joins the elements of the array into a string
+
+        console.log('Your new domain is: ' + newUrl);
+
+
+        //.toLowerCase and .toUpperCase
+
+       let theWordsToShout = 'I am very angry at you right now!';
+       
+       console.log(theWordsToShout.toUpperCase()); //returns the string in uppercase
+    
+    </script>
+
+    
+</body>
+</html>

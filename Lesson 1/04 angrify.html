@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <textarea id="textinput" rows="30" cols="100" placeholder="Paste your text here..."></textarea>
+
+    <button id="makeAngry">Angrify text!
+    </button>
+
+    //lets make text all caps
+    //lets replace periods with exclamation marks
+    //lets add angry words and expressions to the text
+
+    <script>
+
+        const textInput = document.querySelector('#textinput'); // Get the textarea element
+
+        const makeAngryButton = document.querySelector('#makeAngry'); // Get the button element
+ 
+        let angryLevel = 0;
+
+        makeAngryButton.addEventListener('click', () => {
+
+            angryLevel++;
+            
+            let userText = textInput.value;
+
+            if (angryLevel === 1 ) {
+
+                let userTextUpperCase = userText.toUpperCase();
+
+                textInput.value = userTextUpperCase;
+               
+            } else if (angryLevel === 2) {
+
+                textInput.value = textInput.value.replaceAll('.', '!');
+
+            } else if (angryLevel === 3) {
+
+                textInput.value = textInput.value.replaceAll('!', '!!');
+                textInput.value = textInput.value.replaceAll('?', '??');
+
+            } else if (angryLevel > 3) {
+
+                const angryPhrases = [
+                    'COME ON!',
+                    'WHAT THE HECK!',
+                    'ARE YOU KIDDING ME?',
+                    'THIS IS RIDICULOUS!',
+                    'REALLY??',
+                    'WHAT IS THIS!?',
+                    'SERIOUSLY?!'
+                ]
+
+                let textSplitIntoSentences = textInput.value.split(/!+/);
+
+                let myRandomNumberForInsertLocations = Math.floor(Math.random() * textSplitIntoSentences.length);
+
+                textSplitIntoSentences.splice(myRandomNumberForInsertLocations, 0, angryPhrases[Math.floor(Math.random() * angryPhrases.length)]);
+
+                let textJoinedBackTogether = textSplitIntoSentences.join('!'.repeat(angryLevel));
+
+                textInput.value = textJoinedBackTogether;
+
+                myglobalvariable = textSplitIntoSentences;
+
+
+
+            }
+
+
+                
+            
+
+
+        })
+            
+
+
+    </script>
+
+</body>
+</html>

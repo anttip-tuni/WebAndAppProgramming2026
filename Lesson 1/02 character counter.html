@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <textarea id="textInput" rows="40" cols="200" placeholder="Enter your text here..."></textarea>
+
+    <div id="result">Character count: 0</div>
+
+    <script>
+
+        const textInput = document.getElementById('textInput'); // Get the textarea element
+
+        const result = document.getElementById('result'); // Get the result div element
+
+        textInput.addEventListener('input', () => {
+            const text = textInput.value; // Get the current value of the textarea
+
+            const characterCount = text.length; // Get the length of the text
+
+            result.textContent = `Character count: ${characterCount}`; // Update the result div with the character count
+        });
+
+    
+
+
+    </script>
+    
+
+</body>
+</html>
