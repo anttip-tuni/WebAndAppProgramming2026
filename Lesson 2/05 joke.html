@@ -16,7 +16,6 @@
             grid-column: 3 / span 2;
             font-size: 1.5rem;
         }
-
     </style>
 
 </head>
@@ -29,7 +28,8 @@
 
         <p>There was a man who was driving down a long stretch of road in the middle of nowhere when his car broke down.
             He gets out, tries to fix it, can't, and decides to walk down the road to see if he can find any help. He
-            eventually comes across a monastery. He walks up, <span id="knock">knocks on the door </span>, and asks the monk at the door "hey my
+            eventually comes across a monastery. He walks up, <span id="knock">knocks on the door </span>, and asks the
+            monk at the door "hey my
             car broke down just down the road, could I spend the night here until I get it fixed?"</p>
 
         <p>The monk happily agreed, not only welcoming him in, but offering to fix his car and get the traveler on his
@@ -73,55 +73,94 @@
 
     </div>
 
-<script>
+    <script>
 
-    let knocks = 0;
+        let knocks = 0;
 
-    let myGlobalVarForCheckingStuffOut; 
+        let myGlobalVarForCheckingStuffOut;
 
 
 
-    document.getElementById("knock").addEventListener("click", function() {
-        knocks++;
-        if (knocks === 3){ //check the amount of knocks after each click
+        document.getElementById("knock").addEventListener("click", function () {
+            knocks++;
+            if (knocks === 3) { //check the amount of knocks after each click
 
-            let myinput = document.createElement("input"); //create an input element
+                let myinput = document.createElement("input"); //create an input element
 
-            myinput.addEventListener("input", function(){ 
-                reactToInput(this); //we are passing "this" element which is the input in this case, into the reactToInput function
-            });
+                myinput.addEventListener("input", function () {
+                    reactToInput(this); //we are passing "this" element which is the input in this case, into the reactToInput function
+                });
 
-            this.appendChild(myinput); //"this" refers to the element that fired the event (the "knock" span), and we append the input element to it
+                this.appendChild(myinput); //"this" refers to the element that fired the event (the "knock" span), and we append the input element to it
+
+            }
+        });
+
+        function reactToInput(inputElement) { //here we take the input element as an argument, which lets us do further things with it
+
+            const userText = inputElement.value; //get the value of the input element
+
+
+            const userTextWithoutHttpStuff = userText.replace(/^\w+:\/\//, ''); //to create the carat ^ character press shift and the key right to the å
+
+
+            const urlParts = userTextWithoutHttpStuff.split('.');
+
+            myGlobalVarForCheckingStuffOut = urlParts; //we can assign the urlParts to a global variable to check it out in the console
+
+            if (urlParts.length < 2) {
+
+            } else {
+
+                const urlMiddle = urlParts[urlParts.length - 2]; //this gives us the second to last element from the array, avoiding www if present
+
+                let urlMiddleReversed = urlMiddle.split('').reverse().join(''); //this splits the string into an array of characters, reverses the array, and then joins it back into a string
+
+
+                const urlEnd = urlParts[urlParts.length - 1];
+
+                console.log('the urlMiddle was: ' + urlMiddle + ' the urlEnd was: ' + urlEnd)
+
+                let generatedPassword = '';
+
+                const scrambler = 'Pds309i!oErh!Kz';
+
+                if (urlMiddle.length < 5) {
+                    generatedPassword = urlMiddleReversed.slice(0,7) + urlEnd.slice(0,4) + urlMiddle.slice(0,7);
+                } else {
+                    generatedPassword = urlEnd.slice(0,4) + urlMiddleReversed.slice(0,7);
+                }
+
+                let sliceResult =  scrambler.charAt(4) + generatedPassword.slice(1);
+
+                let sliceResult2 = sliceResult.slice(0, 2) + scrambler.charAt(7) + sliceResult.slice(3);
+
+                let sliceresult3 = sliceResult2.slice(0, 5) + sliceResult2.charAt(5).toUpperCase() + sliceResult2.slice(6);
+
+                generatedPassword = sliceresult3.replace(/i/g, 'X');
+
+                generatedPassword = generatedPassword.replace(/l/g, 'z');
+
+                generatedPassword = generatedPassword.replace(/0/g, 'R');
+
+                let arrayForSwapping = generatedPassword.split('');
+
+                [arrayForSwapping[6], arrayForSwapping[2]] = [arrayForSwapping[2], arrayForSwapping[6]]; //this is a way to swap two elements in an array without needing a temporary variable
+
+                generatedPassword = arrayForSwapping.join('');
+
+                console.log("password is at the moment: " + generatedPassword);
+
+            }
+
+
+
 
         }
-    });
-
-    function reactToInput(inputElement){ //here we take the input element as an argument, which lets us do further things with it
-
-        const userText = inputElement.value; //get the value of the input element
-        
-
-        const userTextWithoutHttpStuff = userText.replace(/^\w+:\/\//,''); //to create the carat ^ character press shift and the key right to the å
-       
-
-        const urlParts = userTextWithoutHttpStuff.split('.');
-
-         myGlobalVarForCheckingStuffOut = urlParts; //we can assign the urlParts to a global variable to check it out in the console
-
-         const urlMiddle = urlParts[urlParts.length -2]; //this gives us the second to last element from the array, avoiding www if present
-
-         const urlEnd = urlParts[urlParts.length -1];
-
-         console.log('the urlMiddle was: ' + urlMiddle + ' the urlEnd was: ' + urlEnd)
-
-         let generatedPassword = '';
 
 
-    }
 
-    
-
-</script>
+    </script>
 
 </body>
 
