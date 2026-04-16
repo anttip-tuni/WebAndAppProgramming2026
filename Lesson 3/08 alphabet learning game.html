@@ -19,7 +19,6 @@
             font-size: 5rem;
             margin-bottom: 20px;
         }
-
     </style>
 
 </head>
@@ -37,32 +36,107 @@
 
     <script>
 
-const greekLetters = [
-    { letter: "A", name: "Alpha" },
-    { letter: "B", name: "Beta" },
-    { letter: "Γ", name: "Gamma" },
-    { letter: "Δ", name: "Delta" },
-    { letter: "E", name: "Epsilon" },
-    { letter: "Z", name: "Zeta" },
-    { letter: "H", name: "Eta" },
-    { letter: "Θ", name: "Theta" },
-    { letter: "I", name: "Iota" },
-    { letter: "K", name: "Kappa" },
-    { letter: "Λ", name: "Lambda" },
-    { letter: "M", name: "Mu" },
-    { letter: "N", name: "Nu" },
-    { letter: "Ξ", name: "Xi" },
-    { letter: "O", name: "Omicron" },
-    { letter: "Π", name: "Pi" },
-    { letter: "P", name: "Rho" },
-    { letter: "Σ", name: "Sigma" },
-    { letter: "T", name: "Tau" },
-    { letter: "Y", name: "Upsilon" },
-    { letter: "Φ", name: "Phi" },
-    { letter: "X", name: "Chi" },
-    { letter: "Ψ", name: "Psi" },
-    { letter: "Ω", name: "Omega" }
-    ];
+        //an array of objects representing the Greek letters and their names, or you could think about them as questions and their correct answers
+
+        const greekLetters = [
+            { letter: "A", name: "Alpha" },
+            { letter: "B", name: "Beta" },
+            { letter: "Γ", name: "Gamma" },
+            { letter: "Δ", name: "Delta" },
+            { letter: "E", name: "Epsilon" },
+            { letter: "Z", name: "Zeta" },
+            { letter: "H", name: "Eta" },
+            { letter: "Θ", name: "Theta" },
+            { letter: "I", name: "Iota" },
+            { letter: "K", name: "Kappa" },
+            { letter: "Λ", name: "Lambda" },
+            { letter: "M", name: "Mu" },
+            { letter: "N", name: "Nu" },
+            { letter: "Ξ", name: "Xi" },
+            { letter: "O", name: "Omicron" },
+            { letter: "Π", name: "Pi" },
+            { letter: "P", name: "Rho" },
+            { letter: "Σ", name: "Sigma" },
+            { letter: "T", name: "Tau" },
+            { letter: "Y", name: "Upsilon" },
+            { letter: "Φ", name: "Phi" },
+            { letter: "X", name: "Chi" },
+            { letter: "Ψ", name: "Psi" },
+            { letter: "Ω", name: "Omega" }
+        ];
+
+
+        const currentLetterElement = document.getElementById("currentLetter");
+
+        const answerChoices = document.getElementById("answerChoices");
+
+        const randomNumber = Math.floor(Math.random() * greekLetters.length); //this will give us a random number between 0 and the length of the greekLetters array
+
+        const randomlyChosenPair = greekLetters[randomNumber]; //we use the random number to select a random object from the greekLetters array, which will be our current question + answer pair 
+
+        currentLetterElement.textContent = randomlyChosenPair.letter;
+
+        let answerOptions = [randomlyChosenPair.name]; //we start with an array that only contains the correct answer
+
+
+        while (answerOptions.length < 4) { //keep adding random answers until we have 4 options in total
+
+            const randomNumberForAnswerSelection = Math.floor(Math.random() * greekLetters.length);
+
+            const randomlyChosenPairForAnswer = greekLetters[randomNumberForAnswerSelection];
+
+            if (!answerOptions.includes(randomlyChosenPairForAnswer.name)) { //we are checking that the randomly chosen answer is not already in our answer options array, to avoid duplicates   
+
+                answerOptions.push(randomlyChosenPairForAnswer.name);
+
+
+            }
+
+
+        } //end while
+
+
+        fisherYates(answerOptions); //randomize the "deck"
+
+
+        const buttonsWrapper = document.createElement("div"); //we create a wrapper div for the buttons so that we can easily clear them later when we want to show the next question
+
+        const btn1 = document.createElement("button");
+        const btn2 = document.createElement("button");
+        const btn3 = document.createElement("button");
+        const btn4 = document.createElement("button");
+        btn1.textContent = answerOptions[0];
+        btn2.textContent = answerOptions[1];
+        btn3.textContent = answerOptions[2];
+        btn4.textContent = answerOptions[3];
+        buttonsWrapper.appendChild(btn1);
+        buttonsWrapper.appendChild(btn2);
+        buttonsWrapper.appendChild(btn3);
+        buttonsWrapper.appendChild(btn4);
+
+        //for the homework, it might be a good idea to add event listeners to the buttons here, so that when the user clicks an answer, we can check if it's correct 
+
+        answerChoices.innerHTML = ""; //we clear the previous answer choices, if there were any 
+
+        answerChoices.appendChild(buttonsWrapper);
+
+
+
+        //copy pasted fisher yates shuffle from stack overflow:
+
+        function fisherYates(array) {
+            var count = array.length,
+                randomnumber,
+                temp;
+            while (count) {
+                randomnumber = Math.random() * count-- | 0;
+                temp = array[count];
+                array[count] = array[randomnumber];
+                array[randomnumber] = temp
+            }
+        }
+
+
 
 
     </script>
