@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        
+
+    </style>
+</head>
+<body>
+
+    <div id="answerChoices">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+    </div>
+
+    <script>
+
+        const buttonElements = document.querySelectorAll('#answerChoices button');
+
+        //simple event listener but we dont know which button we clicked, we just know that onbe of them was clicked
+        /* buttonElements.forEach(button => {
+            button.addEventListener('click', () => {
+                console.log('you clicked one of the buttons');
+            })
+        }); */
+
+        //an improved version where we are checking the element and its textContent
+        /* buttonElements.forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('you clicked on the button that says: ' + this.textContent);
+            })
+        }); */
+
+        //if you prefer a fat arrow function, then you dont just have 'this'
+
+        buttonElements.forEach(button => {
+            button.addEventListener('click', (event) => {
+                console.log('you clicked on the button that says: ' + this); //notice how "this" stiff refers to the document Window object, in other words, the fat arrow function hasn't altered the context of "this"
+
+                console.log('You clicked on: ', event.target )
+
+            })
+                
+            });
+  
+        
+
+
+    </script>
+    
+</body>
+</html>
