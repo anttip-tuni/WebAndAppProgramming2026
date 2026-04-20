@@ -36,6 +36,10 @@
 
     <script>
 
+        let currentCorrectAnswer = '';
+
+        let amountOfCorrectAnswersInARow = 0;
+
         //an array of objects representing the Greek letters and their names, or you could think about them as questions and their correct answers
 
         const greekLetters = [
@@ -68,7 +72,31 @@
 
  
 
-        function handleAnswerClick() {
+        function handleAnswerClick(clickedButton) {
+
+            //evaluate the answer:
+
+            if (clickedButton === undefined){
+                console.log('First time we run the handleAnswerClick is without any button press, so the clickedButton is undefined')
+            } else {
+                console.log('You clicked on the button called: ' + clickedButton.textContent);
+
+                if (currentCorrectAnswer === clickedButton.textContent){
+                    amountOfCorrectAnswersInARow++;
+                    alert('Very good! Your streak is: ' + amountOfCorrectAnswersInARow);
+
+                } else {
+                    
+                    alert('Not quite! Your streak was: ' + amountOfCorrectAnswersInARow);
+                    amountOfCorrectAnswersInARow = 0;
+                }
+            }
+
+            
+
+
+
+            //start creating a new question:
 
             const currentLetterElement = document.getElementById("currentLetter");
 
@@ -79,6 +107,9 @@
             const randomlyChosenPair = greekLetters[randomNumber]; //we use the random number to select a random object from the greekLetters array, which will be our current question + answer pair 
 
             currentLetterElement.textContent = randomlyChosenPair.letter;
+
+            //make the global variable know what the correct answer is for this question
+            currentCorrectAnswer = randomlyChosenPair.name; 
 
             let answerOptions = [randomlyChosenPair.name]; //we start with an array that only contains the correct answer
 
@@ -114,10 +145,31 @@
             //at the bottom of the code file, we first tried some other options for adding event listeners to these buttons. 
             //remember how it was a but tricky to deal with the fact that these buttons dont exist on the page load after the first four buttons at least.
             //but here we are solving that difficulty by simply adding the evemt listeners to the buttons right when they are created 
+
+            //this works, until you realise that you need to pass in parameters
+            /*       
             btn1.addEventListener('click', handleAnswerClick);
             btn2.addEventListener('click', handleAnswerClick);
             btn3.addEventListener('click', handleAnswerClick);
-            btn4.addEventListener('click', handleAnswerClick);
+            btn4.addEventListener('click', handleAnswerClick); 
+            */
+
+            //if we need to pass in arguments, we simply have to call the function inside an anonymous functions
+
+            btn1.addEventListener('click', () => {
+                handleAnswerClick(btn1);
+            });
+            btn2.addEventListener('click', () => {
+                handleAnswerClick(btn2);
+            });
+            btn3.addEventListener('click', () => {
+                handleAnswerClick(btn3);
+            });
+            btn4.addEventListener('click', () => {
+                handleAnswerClick(btn4);
+            });
+
+
             buttonsWrapper.appendChild(btn1);
             buttonsWrapper.appendChild(btn2);
             buttonsWrapper.appendChild(btn3);

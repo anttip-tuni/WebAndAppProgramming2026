@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+
+        //simple object using an object literal:
+
+        const food = {
+            name: 'tomato',
+            weightSuggestion: 150,
+            caloriesPerGram: 0.2,
+            protein: 0.01,
+            carbs: 0.035,
+            vegan: true,
+            vegetarian: true,
+            glutenFree: true,
+            lactoseFree: true,
+            carnivore: false
+        };
+
+        //same object but with a method included:
+
+         const food2 = {
+            name: 'tomato',
+            weightSuggestion: 150,
+            caloriesPerGram: 0.2,
+            protein: 0.01,
+            carbs: 0.035,
+            vegan: true,
+            vegetarian: true,
+            glutenFree: true,
+            lactoseFree: true,
+            carnivore: false,
+            caloriesPerItem(){
+                console.log('Calories on average ' + this.weightSuggestion * this.caloriesPerGram);
+            }
+        };
+
+        //when creating multiple objects of the same kind, the above strategy seems wastefull, because its repeating so much code
+
+        //so lets switch to an object constructor function:
+
+        function Food(name, weightSuggestion, caloriesPerGram, protein, carbs, vegan, vegetarian, glutenFree, lactoseFree, carnivore){
+
+            this.name = name;
+            this.weightSuggestion = weightSuggestion;
+            this.caloriesPerGram = caloriesPerGram;
+            this.protein = protein;
+            this.carbs = carbs;
+            this.vegan = vegan;
+            this.vegetarian = vegetarian;
+            this.glutenFree = glutenFree;
+            this.lactoseFree = lactoseFree;
+            this.carnivore = carnivore;
+
+        }
+
+        Food.prototype.calsPerItem = function(){
+            return (this.caloriesPerGram * this.weightSuggestion);
+        }
+
+        const tomato = new Food('tomato', 150, 0.2, 0.01, 0.035, true, true, true, true, false ); 
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,223 @@
+const tomato = {
+  name: 'tomato',
+  weightSuggestion: 150,
+  caloriesPerG: 0.18,
+  sugarPerG: 0.039,
+  proteinPerG: 0.009,
+  fatPerG: 0.002,
+  fiberPerG: 0.01,
+  saltPerG: 0.001,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: false
+};
+
+const chicken = {
+  name: 'chicken breast',
+  weightSuggestion: 200,
+  caloriesPerG: 1.65,
+  sugarPerG: 0,
+  proteinPerG: 0.31,
+  fatPerG: 0.036,
+  fiberPerG: 0,
+  saltPerG: 0.001,
+  vegan: false,
+  vegetarian: false,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: true
+};
+
+const rice = {
+  name: 'white rice',
+  weightSuggestion: 180,
+  caloriesPerG: 1.3,
+  sugarPerG: 0.001,
+  proteinPerG: 0.027,
+  fatPerG: 0.003,
+  fiberPerG: 0.004,
+  saltPerG: 0,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: false
+};
+
+const pasta = {
+  name: 'pasta',
+  weightSuggestion: 180,
+  caloriesPerG: 1.31,
+  sugarPerG: 0.006,
+  proteinPerG: 0.05,
+  fatPerG: 0.011,
+  fiberPerG: 0.018,
+  saltPerG: 0,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: false,
+  lactoseFree: true,
+  carnivore: false
+};
+
+const cheese = {
+  name: 'cheddar cheese',
+  weightSuggestion: 50,
+  caloriesPerG: 4.02,
+  sugarPerG: 0.005,
+  proteinPerG: 0.25,
+  fatPerG: 0.33,
+  fiberPerG: 0,
+  saltPerG: 0.018,
+  vegan: false,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: false,
+  carnivore: true
+};
+
+const milk = {
+  name: 'milk',
+  weightSuggestion: 200,
+  caloriesPerG: 0.42,
+  sugarPerG: 0.05,
+  proteinPerG: 0.034,
+  fatPerG: 0.01,
+  fiberPerG: 0,
+  saltPerG: 0.001,
+  vegan: false,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: false,
+  carnivore: true
+};
+
+const egg = {
+  name: 'egg',
+  weightSuggestion: 60,
+  caloriesPerG: 1.55,
+  sugarPerG: 0.011,
+  proteinPerG: 0.13,
+  fatPerG: 0.11,
+  fiberPerG: 0,
+  saltPerG: 0.003,
+  vegan: false,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: true
+};
+
+const beef = {
+  name: 'beef',
+  weightSuggestion: 200,
+  caloriesPerG: 2.5,
+  sugarPerG: 0,
+  proteinPerG: 0.26,
+  fatPerG: 0.15,
+  fiberPerG: 0,
+  saltPerG: 0.001,
+  vegan: false,
+  vegetarian: false,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: true
+};
+
+const salmon = {
+  name: 'salmon',
+  weightSuggestion: 180,
+  caloriesPerG: 2.08,
+  sugarPerG: 0,
+  proteinPerG: 0.2,
+  fatPerG: 0.13,
+  fiberPerG: 0,
+  saltPerG: 0.001,
+  vegan: false,
+  vegetarian: false,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: true
+};
+
+const potato = {
+  name: 'potato',
+  weightSuggestion: 200,
+  caloriesPerG: 0.77,
+  sugarPerG: 0.008,
+  proteinPerG: 0.02,
+  fatPerG: 0.001,
+  fiberPerG: 0.022,
+  saltPerG: 0,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: false
+};
+
+const carrot = {
+  name: 'carrot',
+  weightSuggestion: 100,
+  caloriesPerG: 0.41,
+  sugarPerG: 0.047,
+  proteinPerG: 0.009,
+  fatPerG: 0.002,
+  fiberPerG: 0.028,
+  saltPerG: 0.001,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: false
+};
+
+const onion = {
+  name: 'onion',
+  weightSuggestion: 80,
+  caloriesPerG: 0.4,
+  sugarPerG: 0.042,
+  proteinPerG: 0.011,
+  fatPerG: 0.001,
+  fiberPerG: 0.017,
+  saltPerG: 0,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: false
+};
+
+const bread = {
+  name: 'bread',
+  weightSuggestion: 80,
+  caloriesPerG: 2.65,
+  sugarPerG: 0.05,
+  proteinPerG: 0.09,
+  fatPerG: 0.032,
+  fiberPerG: 0.024,
+  saltPerG: 0.012,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: false,
+  lactoseFree: true,
+  carnivore: false
+};
+
+const oliveOil = {
+  name: 'olive oil',
+  weightSuggestion: 10,
+  caloriesPerG: 8.84,
+  sugarPerG: 0,
+  proteinPerG: 0,
+  fatPerG: 1,
+  fiberPerG: 0,
+  saltPerG: 0,
+  vegan: true,
+  vegetarian: true,
+  glutenFree: true,
+  lactoseFree: true,
+  carnivore: false
+}

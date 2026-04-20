@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+
+        //classes in JavaScript
+
+        //you create a basic class using the keyword "class"
+        class MyClass {
+            //class body
+        }
+
+        class Employee {
+            constructor(name, age, salary){
+                this.name = name;
+                this.age = age;
+                this.salary = salary;
+            }
+
+            ageBonus(){
+                return this.age * this.salary / 200;
+            }
+        }
+
+        const e100 = new Employee('Alice', 60, 50000);
+
+        //classes and inheritance
+
+        class Executive extends Employee {
+            constructor(name, age, salary, securityClearanceLevel){
+                super(name, age, salary);
+                this.securityClearanceLevel = securityClearanceLevel;
+            }
+        }
+
+        const exec05 = new Executive('Mike', 58, 72000, 2);
+
+    </script>
+    
+</body>
+</html>
