@@ -5,9 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #recipeWrap {
+            min-height: 20vh;
+            background-color: #434343;
+            color: white;
+            border-radius: 0.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        #ingredients {
+            min-height: 10vh;
+            background-color: white;
+            width: 60%;
+            color: black;
+        }
+    </style>
+
 </head>
 
 <body>
+
+    <h1>Recipe maker</h1>
+
+    <div id="recipeWrap">
+
+        <input type="text" id="recipeName" placeholder="name of the recipe">
+
+        <div id="ingredients">
+
+            <div class="ingredientRow">
+
+            </div>
+
+        </div>
+        <button id="addIngredient">+</button>
+
+        <h2>Total calories: </h2>
+
+
+    </div>
 
     <script>
 
@@ -46,6 +94,18 @@
             new Food('olive oil', 10, 8.84, 0, 0, true, true, true, true, false)
         ];
 
+        const defaultRow = document.querySelector('.ingredientRow');
+
+        const selectElement = document.createElement('select'); //the select element is a dropdown input
+
+        defaultRow.appendChild(selectElement);
+
+        foods.forEach(food => { //loop trough the foods array 
+            const option = document.createElement("option"); //options are items in a drop down menu
+            option.value = food.name; //setting the hidden value of each option
+            option.textContent = food.name; //setting the visible value of each option
+            selectElement.appendChild(option); //finally append to the select element
+        })
 
 
 
