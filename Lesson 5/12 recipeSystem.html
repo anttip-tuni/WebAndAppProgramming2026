@@ -99,6 +99,11 @@
                 this.carnivore = carnivore;
 
             }
+
+            //simple method for calculating calories. We need the grams as an argument, because the calories per gram is a property of the food, but the total calories depends on how much of that food we are using 
+            getCalories(grams) {
+                return grams * this.caloriesPerGram;
+            }
         }
 
         const foods = [
@@ -132,9 +137,33 @@
             gramsInput.type = 'number';
             gramsInput.placeholder = 'enter ingredient grams';
             gramsInput.min = 0;
+            gramsInput.value = foods[0].weightSuggestion; 
+
+            const caloriesDisplay = document.createElement('div');
+            caloriesDisplay.className = 'caloriesDisplay';
+            caloriesDisplay.textContent = foods[0].getCalories(foods[0].weightSuggestion) + ' calories';
 
             row.appendChild(selectElement);
             row.appendChild(gramsInput);
+            row.appendChild(caloriesDisplay);
+
+             selectElement.addEventListener('change', addWeightSuggestion); //when the user changes the selected food, we want to update the calories display
+
+            gramsInput.addEventListener('input', updateRow); //when the user types in the grams input, we want to update the calories display
+
+            function updateRow(){
+                const selectedFood = foods[selectElement.selectedIndex]; //get the Food from the foods array that matches with the selected element in the dropdown
+            
+                const grams = gramsInput.value || 0; //get the value from the grams input OR if it's empty, use 0
+                const calories = selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class
+                 caloriesDisplay.textContent = Math.round(calories) + ' calories'; //update the calories display with the new calories
+            }
+
+                function addWeightSuggestion(){
+                    const selectedFood = foods[selectElement.selectedIndex]; //get the Food from the foods array that matches with the selected element in the dropdown
+                    gramsInput.value = selectedFood.weightSuggestion; //update the grams input with the weight suggestion of the selected food
+                    updateRow(); //also update the calories display, because we changed the grams input
+                }
 
             foods.forEach(food => { //loop trough the foods array 
                 const option = document.createElement("option"); //options are items in a drop down menu
