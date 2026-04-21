@@ -55,8 +55,27 @@
         #btnAddIngredient:hover {
             background-color: #3a5dcc;
             transform: scale(1.1);
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
         }
 
+        .deleteRowButton {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: #ff4f4f;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+        }
+
+        .deleteRowButton:hover {
+            background-color: #cc3a3a;
+            transform: scale(1.1);
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+        }
 
 
     </style>
@@ -76,7 +95,7 @@
         </div>
         <button id="btnAddIngredient">+</button>
 
-        <h2>Total calories: </h2>
+        <h2 id="totalCalories">Total calories: </h2>
 
 
     </div>
@@ -134,6 +153,7 @@
 
             const selectElement = document.createElement('select'); //the select element is a dropdown input
             const gramsInput = document.createElement('input');
+            gramsInput.className = 'gramsInput';
             gramsInput.type = 'number';
             gramsInput.placeholder = 'enter ingredient grams';
             gramsInput.min = 0;
@@ -143,9 +163,20 @@
             caloriesDisplay.className = 'caloriesDisplay';
             caloriesDisplay.textContent = foods[0].getCalories(foods[0].weightSuggestion) + ' calories';
 
+            //delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'deleteRowButton';
+            deleteButton.textContent = 'X';
+
             row.appendChild(selectElement);
             row.appendChild(gramsInput);
             row.appendChild(caloriesDisplay);
+            row.appendChild(deleteButton);
+
+            deleteButton.addEventListener('click', () => {
+                row.remove(); 
+                 calculateTotalCalories();
+            });
 
              selectElement.addEventListener('change', addWeightSuggestion); //when the user changes the selected food, we want to update the calories display
 
@@ -157,6 +188,8 @@
                 const grams = gramsInput.value || 0; //get the value from the grams input OR if it's empty, use 0
                 const calories = selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class
                  caloriesDisplay.textContent = Math.round(calories) + ' calories'; //update the calories display with the new calories
+
+                 calculateTotalCalories();
             }
 
                 function addWeightSuggestion(){
@@ -172,8 +205,9 @@
                 selectElement.appendChild(option); //finally append to the select element
             })
 
-
             ingredients.appendChild(row);
+
+            calculateTotalCalories();
 
         }
 
@@ -183,9 +217,37 @@
         btnAddIngredient.addEventListener('click', createIngredientRow);
 
 
+        function calculateTotalCalories() {
+
+            let total = 0;
+            const ingredientRows = document.querySelectorAll('.ingredientRow'); //get all the ingredient rows
+
+            console.log('ingredientRows: ', ingredientRows);
+
+            ingredientRows.forEach(row => {
+
+                //lets traverse a bit
+                //traversing means moving through the DOM tree 
+                const selectElement = row.querySelector('select'); //get the select element from the row
+                const gramsInput = row.querySelector('.gramsInput'); //get the grams input from the row
+
+                const selectedFood = foods[selectElement.selectedIndex]; //get the Food from the foods array that matches with the selected element in the dropdown
+
+                const grams = gramsInput.value || 0; //get the value from the grams input OR if it's empty, use 0
+
+                total += selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class and add it to the total
+
+
+            }); /* Ends the forEach loop */
+            
+            totalCalories.textContent = 'Total calories: ' + Math.round(total); //update the total calories display with the new total
+
+        }
 
 
         createIngredientRow();
+
+        calculateTotalCalories();
 
 
     </script>
