@@ -180,10 +180,7 @@
             return !foodname.startsWith(cleanedSearchTerm) && foodname.includes(cleanedSearchTerm);
 
         }
-        
-            
-            
-            
+         
         
         ); //get the foods that start with the search term
 
@@ -248,7 +245,7 @@ function createIngredientRow() {
 
             deleteButton.addEventListener('click', () => {
                 row.remove();
-                //calculateTotalCalories();
+                calculateTotalCalories();
             });
 
      
@@ -262,7 +259,7 @@ function createIngredientRow() {
                 const calories = selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class
                 caloriesDisplay.textContent = Math.round(calories) + ' calories'; //update the calories display with the new calories
 
-                //calculateTotalCalories();
+                calculateTotalCalories();
             }
 
             function addWeightSuggestion() {
@@ -280,7 +277,7 @@ function createIngredientRow() {
 
             ingredients.appendChild(row);
 
-            //calculateTotalCalories();
+            calculateTotalCalories();
 
         }
 
@@ -299,6 +296,8 @@ function createIngredientRow() {
 
             ingredientRows.forEach(row => {
 
+                const foodInput = row.querySelector('.foodInput'); //get the food input from the row
+
                 //lets traverse a bit
      
                 const gramsInput = row.querySelector('.gramsInput'); //get the grams input from the row
@@ -306,6 +305,10 @@ function createIngredientRow() {
                 const selectedFood = findFoodByName(foodInput.value); //get the Food from the foods array that matches with the selected element in the dropdown
 
                 const grams = gramsInput.value || 0; //get the value from the grams input OR if it's empty, use 0
+
+                if (selectedFood === undefined){
+                    return; //if the selected food is not found in the foods array, we just skip this row and move on to the next one, because we can't calculate the calories for this row if we don't have a valid food selected
+                }
 
                 total += selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class and add it to the total
 
@@ -326,7 +329,7 @@ function createIngredientRow() {
 
         createIngredientRow();
 
-        //calculateTotalCalories();
+        calculateTotalCalories();
             
         
 
