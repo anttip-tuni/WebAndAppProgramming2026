@@ -133,6 +133,11 @@
             getCalories(grams) {
                 return grams * this.getCaloriesPer100g() / 100;
             }
+            
+            getCarbs(grams) {
+                return grams * this.carbs / 100;
+            }
+
         } /* end class Food */
 
         const foods = foodsFromDatabase.map(food => {
@@ -245,7 +250,7 @@ function createIngredientRow() {
 
             deleteButton.addEventListener('click', () => {
                 row.remove();
-                calculateTotalCalories();
+                calculateTotals();
             });
 
      
@@ -259,7 +264,7 @@ function createIngredientRow() {
                 const calories = selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class
                 caloriesDisplay.textContent = Math.round(calories) + ' calories'; //update the calories display with the new calories
 
-                calculateTotalCalories();
+                calculateTotals();
             }
 
             function addWeightSuggestion() {
@@ -277,7 +282,7 @@ function createIngredientRow() {
 
             ingredients.appendChild(row);
 
-            calculateTotalCalories();
+            calculateTotals();
 
         }
 
@@ -287,9 +292,11 @@ function createIngredientRow() {
         btnAddIngredient.addEventListener('click', createIngredientRow);
 
 
-        function calculateTotalCalories() {
+        function calculateTotals() {
 
-            let total = 0;
+            let totalCaloriesValue = 0;
+            let totalCarbsValue = 0;
+
             const ingredientRows = document.querySelectorAll('.ingredientRow'); //get all the ingredient rows
 
             console.log('ingredientRows: ', ingredientRows);
@@ -310,12 +317,13 @@ function createIngredientRow() {
                     return; //if the selected food is not found in the foods array, we just skip this row and move on to the next one, because we can't calculate the calories for this row if we don't have a valid food selected
                 }
 
-                total += selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class and add it to the total
-
+                totalCaloriesValue += selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class and add it to the total
+                totalCarbsValue += selectedFood.getCarbs(grams); //calculate the carbs using the getCarbs method of the Food class and add it to the total   
 
             }); /* Ends the forEach loop */
 
-            totalCalories.textContent = 'Total calories: ' + Math.round(total); //update the total calories display with the new total
+            totalCalories.textContent = 'Total calories: ' + Math.round(totalCaloriesValue); //update the total calories display with the new total
+            totalCarbs.textContent = 'Total carbs: ' + Math.round(totalCarbsValue); //update the total carbs display with the new total  
 
         }
 
@@ -329,7 +337,7 @@ function createIngredientRow() {
 
         createIngredientRow();
 
-        calculateTotalCalories();
+        calculateTotals();
             
         
 
