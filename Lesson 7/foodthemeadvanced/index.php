@@ -106,11 +106,40 @@
 
     <script>
 
+        class Food {
+
+            constructor(name, weightSuggestion, energyKj, protein, carbs, vegan, vegetarian, glutenFree, lactoseFree, carnivore) {
+
+                this.name = name;
+                this.weightSuggestion = weightSuggestion;
+                this.energyKj = energyKj;
+                this.protein = protein;
+                this.carbs = carbs;
+                this.vegan = vegan;
+                this.vegetarian = vegetarian;
+                this.glutenFree = glutenFree;
+                this.lactoseFree = lactoseFree;
+                this.carnivore = carnivore;
+
+            }
+
+            getCaloriesPer100g() {
+                return this.energyKj / 4.184;
+            }
+
+            //simple method for calculating calories. We need the grams as an argument, because the calories per gram is a property of the food, but the total calories depends on how much of that food we are using 
+            getCalories(grams) {
+                return grams * this.getCaloriesPer100g() / 100;
+            }
+        }
+
         const foodSearchInput = document.getElementById('foodSearchInput');
 
         const foodList = document.getElementById('foodList');
 
         const submitFoodSearch = document.getElementById('submitFoodSearch');
+
+
 
         foodSearchInput.addEventListener('input', () => {
             const searchTerm = foodSearchInput.value.toLowerCase().trim();
