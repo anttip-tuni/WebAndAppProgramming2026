@@ -97,6 +97,7 @@
         <button id="btnAddIngredient">+</button>
 
         <h2 id="totalCalories">Total calories: </h2>
+        <h2 id="totalCarbs">Total carbs: </h2>
 
 
     </div>
@@ -108,14 +109,15 @@
 
         class Food {
 
-            constructor(name, weightSuggestion, energyKj, protein, carbs, vegan, vegetarian, glutenFree, lactoseFree, carnivore) {
+            constructor(id, name, weightSuggestion, energyKj, protein, carbs, vegan, vegetarian, glutenFree, lactoseFree, carnivore) {
 
+                this.id = id;
                 this.name = name;
                 this.weightSuggestion = weightSuggestion;
                 this.energyKj = energyKj;
                 this.protein = protein;
                 this.carbs = carbs;
-                this.vegan = vegan;
+                this.vegan = vegan; //if no value is provided for these boolean properties, they will be undefined, which is a falsy value in JavaScript. So if we check for example if (food.vegan) and the vegan property is not provided, it will evaluate to false and we can treat it as not vegan. This way we can have a simple way of handling missing data without having to explicitly set the value of these properties for every food item in our database.
                 this.vegetarian = vegetarian;
                 this.glutenFree = glutenFree;
                 this.lactoseFree = lactoseFree;
@@ -131,42 +133,166 @@
             getCalories(grams) {
                 return grams * this.getCaloriesPer100g() / 100;
             }
-        }
+        } /* end class Food */
 
-        const foodSearchInput = document.getElementById('foodSearchInput');
+        const foods = foodsFromDatabase.map(food => {
+            return new Food (
+                food.id,
+                food.name,
+                100, //default weight suggestion is 100 grams, but this could be something we store in the database as well and retrieve along with the other properties of the food
+                food.energyKj,
+                food.protein,
+                food.carbs,
+                false, //vegan
+                false, //vegetarian
+                false, //glutenFree
+                false, //lactoseFree
+                false  //carnivore
+            )
+        })
+
+
+        const ingredients = document.getElementById('ingredients');
 
         const foodList = document.getElementById('foodList');
 
-        const submitFoodSearch = document.getElementById('submitFoodSearch');
+        const btnAddIngredient = document.getElementById('btnAddIngredient');
 
+        const totalCalories = document.getElementById('totalCalories');
+        const totalCarbs = document.getElementById('totalCarbs');
 
+        //rebuild the datalist while the usser types in the search input
+        function updateFoodList(searchTerm){
+            const cleanedSearchTerm = searchTerm.trim().toLowerCase(); //remove whitespace and convert to lowercase for easier searching. trim() only removes whiotespace from the beginning and end of the string, not from the middle, so if the user types "  apple  " it will be converted to "apple", but if they type "green apple" it will stay as "green apple"
 
-        foodSearchInput.addEventListener('input', () => {
-            const searchTerm = foodSearchInput.value.toLowerCase().trim();
-
-            foodList.innerHTML = '';
-
+            foodList.innerHTML = ''; //clear the datalist before adding the new options
             foods.forEach(food => {
-
                 const option = document.createElement('option');
-
-                option.value = food.name;
-
+                option.value = food.name; 
                 foodList.appendChild(option);
             })
-
-
-        })
-
-
-        submitFoodSearch.addEventListener('click', () =>{
-            const value = foodSearchInput.value.toLowerCase().trim();
-            fetchFoodData(value);
-        })
-
-        function fetchFoodData(foodName){
-            //we will continue here next time
+                
         }
+
+function createIngredientRow() {
+
+            const row = document.createElement('div');
+            row.className = 'ingredientRow';
+
+
+
+            const foodInput = document.createElement('input');
+            foodInput.className = 'foodInput';
+            foodInput.type = 'text';
+            foodInput.placeholder = 'Ingredient name';
+            foodInput.setAttribute('list', 'foodList'); //this makes the input show the datalist as a dropdown when the user clicks on it or starts typing
+
+            foodInput.addEventListener('input', () => {
+                updateFoodList(foodInput.value); //update the datalist options based on the user's input
+            });
+
+            const gramsInput = document.createElement('input');
+            gramsInput.className = 'gramsInput';
+            gramsInput.type = 'number';
+            gramsInput.placeholder = 'enter ingredient grams';
+            gramsInput.min = 0;
+            gramsInput.value = foods[0].weightSuggestion;
+
+            const caloriesDisplay = document.createElement('div');
+            caloriesDisplay.className = 'caloriesDisplay';
+            caloriesDisplay.textContent = foods[0].getCalories(foods[0].weightSuggestion) + ' calories';
+
+            //delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'deleteRowButton';
+            deleteButton.textContent = 'X';
+
+            row.appendChild(foodInput);
+            row.appendChild(gramsInput);
+            row.appendChild(caloriesDisplay);
+            row.appendChild(deleteButton);
+
+            deleteButton.addEventListener('click', () => {
+                row.remove();
+                //calculateTotalCalories();
+            });
+
+     
+
+            gramsInput.addEventListener('input', updateRow); //when the user types in the grams input, we want to update the calories display
+
+            function updateRow() {
+                const selectedFood = findFoodByName(foodInput.value); //get the Food from the foods array that matches with the selected element in the dropdown
+
+                const grams = gramsInput.value || 0; //get the value from the grams input OR if it's empty, use 0
+                const calories = selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class
+                caloriesDisplay.textContent = Math.round(calories) + ' calories'; //update the calories display with the new calories
+
+                //calculateTotalCalories();
+            }
+
+            function addWeightSuggestion() {
+                const selectedFood = findFoodByName(foodInput.value); //get the Food from the foods array that matches with the selected element in the dropdown
+                gramsInput.value = selectedFood.weightSuggestion; //update the grams input with the weight suggestion of the selected food
+                updateRow(); //also update the calories display, because we changed the grams input
+            }
+
+            foods.forEach(food => { //loop trough the foods array 
+                const option = document.createElement("option"); //options are items in a drop down menu
+                option.value = food.name; //setting the hidden value of each option
+                option.textContent = food.name; //setting the visible value of each option
+                
+            })
+
+            ingredients.appendChild(row);
+
+            //calculateTotalCalories();
+
+        }
+
+
+        //because we have an id called addIngredient, we can actually just refer to it like a variable, because the browser creates a global variable for each element with an id, so we can just do addIngredient instead of document.getElementById('addIngredient')
+        //warning: this is not a good practice, because it can lead to bugs and confusion, because you might have a variable with the same name as an id, and then you won't know which one is which, so it's better to always use document.getElementById('id') to avoid confusion 
+        btnAddIngredient.addEventListener('click', createIngredientRow);
+
+
+        function calculateTotalCalories() {
+
+            let total = 0;
+            const ingredientRows = document.querySelectorAll('.ingredientRow'); //get all the ingredient rows
+
+            console.log('ingredientRows: ', ingredientRows);
+
+            ingredientRows.forEach(row => {
+
+                //lets traverse a bit
+     
+                const gramsInput = row.querySelector('.gramsInput'); //get the grams input from the row
+
+                const selectedFood = findFoodByName(foodInput.value); //get the Food from the foods array that matches with the selected element in the dropdown
+
+                const grams = gramsInput.value || 0; //get the value from the grams input OR if it's empty, use 0
+
+                total += selectedFood.getCalories(grams); //calculate the calories using the getCalories method of the Food class and add it to the total
+
+
+            }); /* Ends the forEach loop */
+
+            totalCalories.textContent = 'Total calories: ' + Math.round(total); //update the total calories display with the new total
+
+        }
+
+        function findFoodByName(searchname) {
+            return foods.find(food => {
+                return food.name.toLowerCase() === searchname.trim().toLowerCase(); //we compare the lowercase version of the food name with the lowercase version of the input name, and we also trim the input name to remove any extra whitespace, so that if the user types "  apple  " it will still match with "Apple" in the foods array
+            });
+        
+        };
+
+
+        createIngredientRow();
+
+        //calculateTotalCalories();
             
         
 
