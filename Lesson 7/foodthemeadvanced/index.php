@@ -165,8 +165,42 @@
         function updateFoodList(searchTerm){
             const cleanedSearchTerm = searchTerm.trim().toLowerCase(); //remove whitespace and convert to lowercase for easier searching. trim() only removes whiotespace from the beginning and end of the string, not from the middle, so if the user types "  apple  " it will be converted to "apple", but if they type "green apple" it will stay as "green apple"
 
+            const startsWithMatches = foods.filter(food => food.name.toLowerCase().startsWith(cleanedSearchTerm)); //get the foods that start with the search term
+
+            console.log('startsWithMatches: ', startsWithMatches);
+
+            startsWithMatches.sort((foodA, foodB) => {
+                return foodA.name.length - foodB.name.length; //sort the matches so that the shortest names come first, because they are usually easier to read and more likely to be what the user is looking for. For example if the user types "apple", we want "Apple" to come before "Green apple" in the list of matches, because "Apple" is a more likely match for the user's intent when they type "apple" 
+            })
+
+        //Now take ONLY the foods that DONT start with the search term, but INCLUDE the foods that start with the search term, because we want to show them in the datalist as well
+        
+        const includesMatchesButDoesntStartWithOne = foods.filter(food => {
+            const foodname = food.name.toLowerCase(); 
+            return !foodname.startsWith(cleanedSearchTerm) && foodname.includes(cleanedSearchTerm);
+
+        }
+        
+            
+            
+            
+        
+        ); //get the foods that start with the search term
+
+            console.log('startsWithMatches: ', startsWithMatches);
+
+            includesMatchesButDoesntStartWithOne.sort((foodA, foodB) => {
+                return foodA.name.length - foodB.name.length; //sort the matches so that the shortest names come first, because they are usually easier to read and more likely to be what the user is looking for. For example if the user types "apple", we want "Apple" to come before "Green apple" in the list of matches, because "Apple" is a more likely match for the user's intent when they type "apple" 
+            })
+
+            //merge the two array together with startsWithMatches first, because we want the foods that start with the search term to come first in the datalist, and then the foods that include the search term but dont start with it, so that they are still visible to the user but not as prominent as the ones that start with the search term
+            const orderedFoods = startsWithMatches.concat(includesMatchesButDoesntStartWithOne);
+
+
+
+
             foodList.innerHTML = ''; //clear the datalist before adding the new options
-            foods.forEach(food => {
+            orderedFoods.forEach(food => {
                 const option = document.createElement('option');
                 option.value = food.name; 
                 foodList.appendChild(option);
