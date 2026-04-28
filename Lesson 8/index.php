@@ -29,7 +29,7 @@
         <h2 id="timePassedDisplay">Time passed: 0</h2>
     </div>
 
-    <form id="sendHighScore" method="post" action="">
+    <form id="sendHighScore" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
 
         <input type="text" name="playerName" required placeholder="Your name">
 
@@ -41,10 +41,10 @@
 
     </form>
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg version="1.1" viewBox="0 0 1920 1038" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
- <image width="1920" height="1038" preserveAspectRatio="none" xlink:href="findfive_bg.jpg"/>
+ <image width="1920" height="1038" preserveAspectRatio="none" xlink:href="<?php bloginfo('template_url'); ?>/findfive_bg.jpg"/>
  <g fill-opacity="0" stroke="#fe5523">
     <g stroke-width="6.6">
    <path class="hotspot1" d="m159.5 600.7c33.27-15.59 72.81 20.04 54.07 54.2-12.96 32.26-64.89 29.5-73.54-4.162-3.941-18.65 6.667-37.27 19.47-50.03z" stroke-width="6.6"/>
