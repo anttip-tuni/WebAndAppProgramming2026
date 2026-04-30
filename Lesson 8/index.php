@@ -61,6 +61,38 @@
  </g>
 </svg>
 
+<?php 
+    global $wpdb;
+    $rowResults = $wpdb->get_results("SELECT playerName, playerTime FROM highscores ORDER BY playerTime ASC");
+?>
+
+<table class="highscoreTable">
+    <tr>
+        <th>Rank</th>
+        <th>Player</th>
+        <th>Time</th>
+    </tr>
+
+    <?php 
+    $rank = 1;
+    foreach ($rowResults as $row){
+        ?>
+
+        <tr>
+            <td><?php echo $rank; ?></td>
+            <td><?php echo $row->playerName; ?></td>
+            <td><?php echo $row->playerTime; ?></td>
+        </tr>
+
+    <?php 
+    $rank++;
+
+    }
+    ?>
+
+
+</table>
+
 <script>
 
     let foundMistakes = 0;
